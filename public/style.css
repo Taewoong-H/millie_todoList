@@ -1,0 +1,25 @@
+.make-to-do-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  height: 50px;
+  border: 1px solid;
+  padding: 5px;
+}
+
+.make-to-do-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 42%;
+  margin-right: 30px;
+}
+
+.make-to-do-input input {
+  height: 30px;
+}
+
+.make-to-do-button {
+  width: 70px;
+}
