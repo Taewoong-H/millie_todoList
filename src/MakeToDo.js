@@ -8,9 +8,10 @@ export default function MakeToDo({ $app, initialState, onClick }) {
   };
 
   this.$target = document.createElement('div');
-  this.$target.className = 'MakeToDo';
+  this.$target.className = 'make-to-do';
 
-  $app.appendChild(this.$target);
+  const leftTarget = $app.querySelector('.left-container');
+  leftTarget.appendChild(this.$target);
 
   this.onClick = onClick;
 
@@ -18,11 +19,11 @@ export default function MakeToDo({ $app, initialState, onClick }) {
     this.$target.innerHTML = `
       <h2 class="make-to-do-title">할 일 만들기</h2>
       <div class="make-to-do-container">
-        <div class="make-to-do-input" id="left">
+        <div class="make-to-do-input">
           <label>할 일 작성</label>
           <input type="text" id="input-left" placeholder="할 일 내용 입력"></input>
         </div>
-        <div class="make-to-do-input" id="right">
+        <div class="make-to-do-input">
           <label>종료 시간</label>
           <input type="number" id="input-right" placeholder="초 단위 입력"></input>
         </div>
@@ -44,6 +45,7 @@ export default function MakeToDo({ $app, initialState, onClick }) {
           id: this.state.length + 1,
           text: toDoText,
           time: toDoTime,
+          isCount: false,
         };
 
         this.onClick(toDoItem);
