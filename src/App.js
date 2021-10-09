@@ -4,14 +4,13 @@ import DoneToDo from './DoneToDo.js';
 
 export default function App($app) {
   this.state = {
-    isCountDown: false,
     toDoItems: [],
     doneToDoItems: [],
   };
 
   const leftContainer = document.createElement('div');
-  leftContainer.className = 'left-container';
   const rightContainer = document.createElement('div');
+  leftContainer.className = 'left-container';
   rightContainer.className = 'right-container';
   $app.appendChild(leftContainer);
   $app.appendChild(rightContainer);
@@ -22,7 +21,7 @@ export default function App($app) {
     onClick: (toDoItem) => {
       this.setState({
         toDoItems: [...this.state.toDoItems, toDoItem],
-        doneToDoItems: [...this.state.toDoItems],
+        doneToDoItems: [...this.state.doneToDoItems],
       });
       console.log(this.state);
     },
@@ -31,6 +30,14 @@ export default function App($app) {
   const listToDo = new ListToDo({
     $app,
     initialState: this.state.toDoItems,
+    doneCount: (toDo) => {
+      // const deleteToDoItems = this.state.toDoItems.filter((item) => item.id !== toDo.id);
+      this.setState({
+        toDoItems: [...this.state.toDoItems],
+        doneToDoItems: [...this.state.doneToDoItems, toDo],
+      });
+      console.log(this.state);
+    },
   });
 
   const doneToDo = new DoneToDo({
@@ -42,18 +49,6 @@ export default function App($app) {
     this.state = nextState;
     makeToDo.setState(this.state.toDoItems);
     listToDo.setState(this.state.toDoItems);
+    doneToDo.setState(this.state.doneToDoItems);
   };
-
-  // const init = () => {
-  //   try {
-  //     this.setState({
-  //       ...this.state,
-  //     });
-  //     console.log('render');
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // init();
 }

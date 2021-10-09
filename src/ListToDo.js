@@ -1,7 +1,8 @@
 import ItemToDo from './ItemToDo.js';
 
-export default function ListToDo({ $app, initialState }) {
+export default function ListToDo({ $app, initialState, doneCount }) {
   this.state = initialState;
+  this.doneCount = doneCount;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -9,10 +10,17 @@ export default function ListToDo({ $app, initialState }) {
     this.state.map((toDo) => {
       if (!toDo.isCount) {
         toDo.isCount = true;
-        setInterval(() => {
-          toDo.time--;
+        const countDown = setInterval(() => {
+          toDo.time.count--;
+          // 시간이 0이 될 시 종료
+          if (toDo.time.count < 0) {
+            clearInterval(countDown);
+            toDo.isFinish = true;
+            this.doneCount(toDo);
+          }
           itemToDo.setState(toDo);
         }, 1000);
+
         const itemToDo = new ItemToDo({
           $app,
           initialState: toDo,

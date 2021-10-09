@@ -1,10 +1,11 @@
 export default function MakeToDo({ $app, initialState, onClick }) {
   this.state = initialState;
+  this.onClick = onClick;
 
   this.setState = (nextState) => {
     this.state = nextState;
 
-    this.render();
+    // this.render();
   };
 
   this.$target = document.createElement('div');
@@ -12,8 +13,6 @@ export default function MakeToDo({ $app, initialState, onClick }) {
 
   const leftTarget = $app.querySelector('.left-container');
   leftTarget.appendChild(this.$target);
-
-  this.onClick = onClick;
 
   this.render = () => {
     this.$target.innerHTML = `
@@ -36,19 +35,25 @@ export default function MakeToDo({ $app, initialState, onClick }) {
     const $button = e.target.closest('.make-to-do-button');
 
     if ($button) {
-      const toDoText = document.querySelector('#input-left').value;
-      const toDoTime = document.querySelector('#input-right').value;
+      const inputText = document.querySelector('#input-left');
+      const inputTime = document.querySelector('#input-right');
+      const toDoText = inputText.value;
+      const toDoTime = inputTime.value;
 
-      // 필수 값
+      // 필수 값 설정
       if (toDoText.length > 0 && toDoTime.length > 0) {
+        // ToDoItem Object
         const toDoItem = {
           id: this.state.length + 1,
           text: toDoText,
-          time: toDoTime,
+          time: { origin: toDoTime, count: toDoTime },
           isCount: false,
+          isFinish: false,
         };
 
         this.onClick(toDoItem);
+        inputText.value = '';
+        inputTime.value = '';
       }
     }
   });
