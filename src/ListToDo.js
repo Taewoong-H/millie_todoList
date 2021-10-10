@@ -1,9 +1,11 @@
 import ItemToDo from './ItemToDo.js';
 
-export default function ListToDo({ $app, initialState, doneCount }) {
+export default function ListToDo({ $app, initialState, doneCount, onClick }) {
   // state 및 this객체 설정
   this.state = initialState;
   this.doneCount = doneCount;
+  this.onClick = onClick;
+  this.selectedToDo = [];
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -23,6 +25,10 @@ export default function ListToDo({ $app, initialState, doneCount }) {
           if (toDo.time.count < 0) {
             setAutoDone(countDown, toDo);
           }
+          // count가 종료 될 시 함수 종료
+          if (!toDo.isCount) {
+            clearInterval(countDown);
+          }
           itemToDo.setState(toDo);
         }, 1000);
 
@@ -38,6 +44,13 @@ export default function ListToDo({ $app, initialState, doneCount }) {
       onClick: (toDo) => {
         setClickDone(countDown, toDo);
       },
+      onCheck: (toDo, isChecked) => {
+        if (isChecked) {
+          this.selectedToDo.push(toDo);
+        } else {
+          this.selectedToDo = this.selectedToDo.filter((selected) => selected !== toDo);
+        }
+      },
     });
 
     return itemToDo;
@@ -46,12 +59,14 @@ export default function ListToDo({ $app, initialState, doneCount }) {
   const setClickDone = (countDown, toDo) => {
     clearInterval(countDown);
     toDo.isFinish = true;
+    toDo.isCount = false;
     this.doneCount(toDo, false);
   };
 
   const setAutoDone = (countDown, toDo) => {
     clearInterval(countDown);
     toDo.isFinish = true;
+    toDo.isCount = false;
     this.doneCount(toDo, true);
   };
 
@@ -71,8 +86,8 @@ export default function ListToDo({ $app, initialState, doneCount }) {
           <button>남은 시간 순</button>
         </div>
         <div class="done-button-container">
-          <button>전체 종료</button>
-          <button>선택 종료</button>
+          <button class="all-done-to-do-button">전체 종료</button>
+          <button class="select-done-to-do-button">선택 종료</button>
         </div>
       </div>
       <div class="list-to-do-container">
@@ -80,6 +95,28 @@ export default function ListToDo({ $app, initialState, doneCount }) {
       </div>
     `;
   };
+
+  // event handler
+  this.$target.addEventListener('click', (e) => {
+    const $allButton = e.target.closest('.all-done-to-do-button');
+    const $selectButton = e.target.closest('.select-done-to-do-button');
+
+    if ($allButton) {
+      this.state.forEach((toDo) => {
+        toDo.isFinish = true;
+        toDo.isCount = false;
+      });
+      this.onClick(this.state);
+    }
+
+    if ($selectButton) {
+      this.selectedToDo.forEach((toDo) => {
+        toDo.isFinish = true;
+        toDo.isCount = false;
+      });
+      this.onClick(this.selectedToDo);
+    }
+  });
 
   this.render();
 }

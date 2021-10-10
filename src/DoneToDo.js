@@ -1,6 +1,7 @@
 import ItemToDo from './ItemToDo.js';
 
 export default function DoneToDo({ $app, initialState }) {
+  // state 및 this객체 설정
   this.state = initialState;
 
   this.setState = (nextState) => {
@@ -14,6 +15,7 @@ export default function DoneToDo({ $app, initialState }) {
     });
   };
 
+  // render
   this.$target = document.createElement('div');
   this.$target.className = 'done-to-do';
 

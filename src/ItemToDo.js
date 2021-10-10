@@ -1,6 +1,8 @@
-export default function ItemToDo({ $app, initialState, onClick }) {
+export default function ItemToDo({ $app, initialState, onClick, onCheck }) {
+  // state 및 this객체 설정
   this.state = initialState;
   this.onClick = onClick;
+  this.onCheck = onCheck;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -8,11 +10,13 @@ export default function ItemToDo({ $app, initialState, onClick }) {
     this.rerender();
   };
 
+  // render
   this.$target = document.createElement('div');
   this.$target.className = 'to-do';
   this.$target.id = this.state.id;
 
   if (!this.state.isFinish) {
+    // 할 일 목록에 추가
     const container = $app.querySelector('.list-to-do-container');
     container.appendChild(this.$target);
   } else {
@@ -24,11 +28,10 @@ export default function ItemToDo({ $app, initialState, onClick }) {
     container.appendChild(this.$target);
   }
 
-  // render
   this.render = () => {
     this.$target.innerHTML = `
       <div>
-        ${this.state.isFinish ? '' : '<input type="checkbox" />'}
+        ${this.state.isFinish ? '' : `<input type="checkbox" value="${this.state.id}" class="check-box"/>`}
         <span>${this.state.text}</span>
       </div>
       <div>
@@ -40,11 +43,21 @@ export default function ItemToDo({ $app, initialState, onClick }) {
     `;
   };
 
+  // event handler
   this.$target.addEventListener('click', (e) => {
     const $button = e.target.closest('.done-to-do-button');
+    const $checkBox = e.target.closest('.check-box');
 
     if ($button) {
       this.onClick(this.state);
+    }
+
+    if ($checkBox) {
+      if ($checkBox.checked) {
+        this.onCheck(this.state, true);
+      } else {
+        this.onCheck(this.state, false);
+      }
     }
   });
 

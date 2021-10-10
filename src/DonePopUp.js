@@ -1,4 +1,5 @@
 export default function DonePopUp({ $app, initialState }) {
+  // state 및 this객체 설정
   this.state = initialState;
 
   this.setState = (nextState) => {
@@ -11,6 +12,7 @@ export default function DonePopUp({ $app, initialState }) {
     }
   };
 
+  // render
   this.$target = document.createElement('div');
   this.$target.className = 'pop-up';
   $app.appendChild(this.$target);
@@ -25,6 +27,7 @@ export default function DonePopUp({ $app, initialState }) {
     `;
   };
 
+  // event handler
   this.$target.addEventListener('click', (e) => {
     const $button = e.target.closest('.pop-up-button');
 

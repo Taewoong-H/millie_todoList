@@ -35,11 +35,23 @@ export default function App($app) {
     $app,
     initialState: this.state.toDoItems,
     doneCount: (toDo, isPopUp) => {
+      const newToDoItems = this.state.toDoItems.filter((e) => e !== toDo);
+
       this.setState({
-        toDoItems: [...this.state.toDoItems],
+        toDoItems: [...newToDoItems],
         doneToDoItems: [...this.state.doneToDoItems, toDo],
         doneToDoItem: toDo,
         isPopUp: isPopUp ? true : false,
+      });
+    },
+    onClick: (toDos) => {
+      const newToDoItems = this.state.toDoItems.filter((e) => !toDos.includes(e));
+
+      this.setState({
+        toDoItems: [...newToDoItems],
+        doneToDoItems: [...this.state.doneToDoItems, ...toDos],
+        doneToDoItem: {},
+        isPopUp: false,
       });
     },
   });

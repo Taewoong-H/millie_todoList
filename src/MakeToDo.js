@@ -1,6 +1,7 @@
 export default function MakeToDo({ $app, initialState, onClick }) {
   this.state = initialState;
   this.onClick = onClick;
+  this.count = 0;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -43,8 +44,9 @@ export default function MakeToDo({ $app, initialState, onClick }) {
       // 필수 값 설정
       if (toDoText.length > 0 && toDoTime.length > 0) {
         // ToDoItem Object
+        this.count += 1;
         const toDoItem = {
-          id: this.state.length + 1,
+          id: this.count,
           text: toDoText,
           time: { origin: toDoTime, count: toDoTime },
           isCount: false,
