@@ -5,7 +5,6 @@ export default function DoneToDo({ $app, initialState }) {
 
   this.setState = (nextState) => {
     this.state = nextState;
-    console.log(this.state);
 
     this.state.map((toDo) => {
       const itemToDo = new ItemToDo({

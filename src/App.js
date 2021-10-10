@@ -1,11 +1,14 @@
 import MakeToDo from './MakeToDo.js';
 import ListToDo from './ListToDo.js';
 import DoneToDo from './DoneToDo.js';
+import DonePopUp from './DonePopUp.js';
 
 export default function App($app) {
   this.state = {
     toDoItems: [],
     doneToDoItems: [],
+    doneToDoItem: {},
+    isPopUp: false,
   };
 
   const leftContainer = document.createElement('div');
@@ -22,21 +25,22 @@ export default function App($app) {
       this.setState({
         toDoItems: [...this.state.toDoItems, toDoItem],
         doneToDoItems: [...this.state.doneToDoItems],
+        doneToDoItem: {},
+        isPopUp: false,
       });
-      console.log(this.state);
     },
   });
 
   const listToDo = new ListToDo({
     $app,
     initialState: this.state.toDoItems,
-    doneCount: (toDo) => {
-      // const deleteToDoItems = this.state.toDoItems.filter((item) => item.id !== toDo.id);
+    doneCount: (toDo, isPopUp) => {
       this.setState({
         toDoItems: [...this.state.toDoItems],
         doneToDoItems: [...this.state.doneToDoItems, toDo],
+        doneToDoItem: toDo,
+        isPopUp: isPopUp ? true : false,
       });
-      console.log(this.state);
     },
   });
 
@@ -45,10 +49,22 @@ export default function App($app) {
     initialState: this.state.doneToDoItems,
   });
 
+  const donePopUp = new DonePopUp({
+    $app,
+    initialState: {
+      doneToDoItem: this.state.doneToDoItem,
+      isPopUp: this.state.isPopUp,
+    },
+  });
+
   this.setState = (nextState) => {
     this.state = nextState;
     makeToDo.setState(this.state.toDoItems);
     listToDo.setState(this.state.toDoItems);
     doneToDo.setState(this.state.doneToDoItems);
+    donePopUp.setState({
+      doneToDoItem: this.state.doneToDoItem,
+      isPopUp: this.state.isPopUp,
+    });
   };
 }

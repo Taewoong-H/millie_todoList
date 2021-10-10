@@ -1,4 +1,5 @@
 body {
+  max-width: 1280px;
   margin: 0;
   background: #fff;
   color: #202124;
@@ -54,7 +55,7 @@ body {
 .list-to-do-container {
   position: relative;
   width: 100%;
-  height: 300px;
+  min-height: 300px;
   border: 1px solid;
   margin-top: 10px;
   padding: 5px;
@@ -78,4 +79,41 @@ body {
 
 .to-do div button {
   margin: 0 5px;
+}
+
+.done-to-do-container {
+  position: relative;
+  width: 100%;
+  min-height: 468px;
+  border: 1px solid;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.pop-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.pop-up-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  padding: 40px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.pop-up-button {
+  margin-top: 30px;
+  padding: 10px 30px;
 }
