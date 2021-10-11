@@ -43,17 +43,7 @@ export default function MakeToDo({ $app, initialState, onClick }) {
 
       // 필수 값 설정
       if (toDoText.length > 0 && toDoTime.length > 0) {
-        // ToDoItem Object
-        this.count += 1;
-        const toDoItem = {
-          id: this.count,
-          text: toDoText,
-          time: { origin: toDoTime, count: toDoTime },
-          isCount: false,
-          isFinish: false,
-        };
-
-        this.onClick(toDoItem);
+        this.onClick(toDoText, toDoTime);
         inputText.value = '';
         inputTime.value = '';
       }

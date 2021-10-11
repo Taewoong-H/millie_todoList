@@ -1,6 +1,7 @@
-export default function DonePopUp({ $app, initialState }) {
+export default function DonePopUp({ $app, initialState, onClick }) {
   // state 및 this객체 설정
   this.state = initialState;
+  this.onClick = onClick;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -33,6 +34,7 @@ export default function DonePopUp({ $app, initialState }) {
 
     if ($button) {
       this.$target.style.display = 'none';
+      this.onClick();
     }
   });
 

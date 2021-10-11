@@ -1,4 +1,4 @@
-import ItemToDo from './ItemToDo.js';
+import ToDo from './ToDo.js';
 
 export default function DoneToDo({ $app, initialState }) {
   // state 및 this객체 설정
@@ -7,14 +7,7 @@ export default function DoneToDo({ $app, initialState }) {
   this.setState = (nextState) => {
     this.state = nextState;
 
-    console.log(this.state);
-
-    this.state.map((toDo) => {
-      const itemToDo = new ItemToDo({
-        $app: this.$target,
-        initialState: toDo,
-      });
-    });
+    this.render();
   };
 
   // render
@@ -29,14 +22,13 @@ export default function DoneToDo({ $app, initialState }) {
   rightTarget.appendChild(title);
   rightTarget.appendChild(this.$target);
 
-  // this.render = () => {
-  //   this.$target.innerHTML = `
-  //     <h2 class="done-to-do-title">종료된 할 일</h2>
-  //     <div class="done-to-do-container">
-  //       <!-- item-to-do -->
-  //     </div>
-  //   `;
-  // };
+  this.render = () => {
+    this.$target.innerHTML = this.state
+      .map((toDo) => {
+        return toDo.render();
+      })
+      .join('');
+  };
 
-  // this.render();
+  this.render();
 }

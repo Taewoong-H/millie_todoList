@@ -52,6 +52,14 @@ body {
   justify-content: space-between;
 }
 
+.input-sort-button.active::before {
+  content: '🗸';
+}
+
+.time-sort-button.active::before {
+  content: '🗸';
+}
+
 .list-to-do-container {
   position: relative;
   width: 100%;
