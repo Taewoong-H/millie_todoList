@@ -11,23 +11,25 @@ export default function DoneToDo({ $app, initialState }) {
   };
 
   // render
-  const title = document.createElement('h2');
-  title.className = 'done-to-do-title';
-  title.innerHTML = '종료된 할 일';
-
   this.$target = document.createElement('div');
-  this.$target.className = 'done-to-do-container';
+  this.$target.className = 'done-to-do';
 
   const rightTarget = $app.querySelector('.right-container');
-  rightTarget.appendChild(title);
   rightTarget.appendChild(this.$target);
 
   this.render = () => {
-    this.$target.innerHTML = this.state
+    const doneToDoTemplate = this.state
       .map((toDo) => {
         return toDo.render();
       })
       .join('');
+
+    this.$target.innerHTML = `
+      <h2 class="done-to-do-title">종료된 할 일</h2>
+      <div class="done-to-do-container">
+        ${doneToDoTemplate}
+      </div>
+    `;
   };
 
   this.render();

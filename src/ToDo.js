@@ -1,4 +1,5 @@
 export default function ToDo({ id, text, time, isCount, isFinish, isChecked, setRender, doneCount }) {
+  // state 및 this객체 설정
   this.id = id;
   this.text = text;
   this.time = time;
@@ -22,12 +23,13 @@ export default function ToDo({ id, text, time, isCount, isFinish, isChecked, set
       if (!this.isCount) {
         clearInterval(countDown);
       }
-      this.setRender();
+      this.setRender(this);
     }, 1000);
   };
 
   this.setCount();
 
+  // render
   this.render = () => {
     return `
       <div class="to-do">
@@ -40,12 +42,20 @@ export default function ToDo({ id, text, time, isCount, isFinish, isChecked, set
           <span>${this.text}</span>
         </div>
         <div>
-          <span id="count${this.id}">
+          <span id="count${this.id}" class="count">
             ${this.isFinish ? this.time.origin : this.time.count}초
           </span>
           ${this.isFinish ? '' : `<button data-id=${this.id} class="done-to-do-button">종료</button>`}
         </div>
       </div>
     `;
+  };
+
+  // 시간 초 rerendering
+  this.countRender = () => {
+    if (this.isCount) {
+      const countText = document.querySelector(`#count${this.id}`);
+      countText.innerHTML = `${this.time.count}초`;
+    }
   };
 }

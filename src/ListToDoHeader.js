@@ -1,4 +1,5 @@
 export default function ListToDoHeader({ $app, initialState, onClick, onSortClick }) {
+  // state 및 this객체 설정
   this.state = initialState;
   this.onClick = onClick;
   this.onSortClick = onSortClick;
@@ -9,6 +10,7 @@ export default function ListToDoHeader({ $app, initialState, onClick, onSortClic
     this.render();
   };
 
+  // render
   this.$target = document.createElement('div');
   this.$target.className = 'list-to-do-header';
 

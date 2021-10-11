@@ -36,8 +36,8 @@ export default function App($app) {
         isCount: true,
         isFinish: false,
         isChecked: false,
-        setRender: () => {
-          listToDo.render();
+        setRender: (toDo) => {
+          toDo.countRender();
         },
         doneCount: (toDo, isPopUp) => {
           const newToDoItems = this.state.toDoItems.filter((e) => e !== toDo);
