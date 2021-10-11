@@ -1,8 +1,8 @@
-export default function ListToDo({ $app, initialState, onSortClick, onClick }) {
+export default function ListToDo({ $app, initialState, onClick, onCheckClick }) {
   // state 및 this객체 설정
   this.state = initialState;
-  this.onSortClick = onSortClick;
   this.onClick = onClick;
+  this.onCheckClick = onCheckClick;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -10,35 +10,22 @@ export default function ListToDo({ $app, initialState, onSortClick, onClick }) {
     this.render();
   };
 
+  // render
   this.$target = document.createElement('div');
-  this.$target.className = 'list-to-do';
+  this.$target.className = 'list-to-do-container';
 
   const leftTarget = $app.querySelector('.left-container');
   leftTarget.appendChild(this.$target);
 
   this.render = () => {
-    const selectedToDo = this.state.toDoItems.filter((toDo) => toDo.isChecked);
-    const toDoTemplate = this.state.toDoItems
+    const toDoTemplate = this.state
       .map((toDo) => {
         return toDo.render();
       })
       .join('');
 
     this.$target.innerHTML = `
-      <h2 class="list-to-do-title">할 일 목록</h2>
-      <div class="button-container">
-        <div class="sort-button-container">
-          <button class="input-sort-button ${this.state.sortType === 'input' ? 'active' : ''}">입력한 순</button>
-          <button class="time-sort-button ${this.state.sortType === 'time' ? 'active' : ''}">남은 시간 순</button>
-        </div>
-        <div class="done-button-container">
-          <button class="all-done-to-do-button">전체 종료</button>
-          <button class="select-done-to-do-button" ${selectedToDo.length > 0 ? '' : 'disabled'}>선택 종료</button>
-        </div>
-      </div>
-      <div class="list-to-do-container">
-        ${toDoTemplate}
-      </div>
+      ${toDoTemplate}
     `;
   };
 
@@ -46,50 +33,19 @@ export default function ListToDo({ $app, initialState, onSortClick, onClick }) {
   this.$target.addEventListener('click', (e) => {
     const $doneButton = e.target.closest('.done-to-do-button');
     const $checkBox = e.target.closest('.check-box');
-    const $inputSortButton = e.target.closest('.input-sort-button');
-    const $timeSortButton = e.target.closest('.time-sort-button');
-    const $allButton = e.target.closest('.all-done-to-do-button');
-    const $selectButton = e.target.closest('.select-done-to-do-button');
 
     if ($doneButton) {
-      const doneToDo = this.state.toDoItems.filter((toDo) => toDo.id === Number($doneButton.dataset.id));
-      doneToDo.forEach((toDo) => {
-        toDo.isCount = false;
-        toDo.isFinish = true;
-      });
+      const doneToDo = this.state.find((toDo) => toDo.id === Number($doneButton.dataset.id));
+      doneToDo.isCount = false;
+      doneToDo.isFinish = true;
       this.onClick(doneToDo);
     }
 
     if ($checkBox) {
-      const checkedToDo = this.state.toDoItems.find((toDo) => toDo.id === Number($checkBox.value));
+      const checkedToDo = this.state.find((toDo) => toDo.id === Number($checkBox.value));
 
       checkedToDo.isChecked = $checkBox.checked;
-      this.render();
-    }
-
-    if ($inputSortButton) {
-      this.onSortClick('input');
-    }
-
-    if ($timeSortButton) {
-      this.onSortClick('time');
-    }
-
-    if ($allButton) {
-      this.state.toDoItems.forEach((toDo) => {
-        toDo.isCount = false;
-        toDo.isFinish = true;
-      });
-      this.onClick(this.state.toDoItems);
-    }
-
-    if ($selectButton) {
-      const checkedToDoItems = this.state.toDoItems.filter((toDo) => toDo.isChecked);
-      checkedToDoItems.forEach((toDo) => {
-        toDo.isCount = false;
-        toDo.isFinish = true;
-      });
-      this.onClick(checkedToDoItems);
+      this.onCheckClick();
     }
   });
 
