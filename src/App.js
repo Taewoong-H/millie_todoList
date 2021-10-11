@@ -85,7 +85,7 @@ export default function App($app) {
       } else {
         this.state.sortType = 'time';
         this.state.toDoItems.sort((a, b) => {
-          return a.time.origin - b.time.origin;
+          return a.time.count - b.time.count;
         });
 
         this.setState({

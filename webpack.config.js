@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const prod = process.env.NODE_ENV === 'production';
 
@@ -15,8 +16,8 @@ module.exports = {
 
   // 번들링 된 파일이 생성될 위치 설정
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist/',
+    path: path.resolve('./dist'),
+    // publicPath: '/dist/',
     filename: 'bundle.js',
   },
 
@@ -27,13 +28,25 @@ module.exports = {
         test: /\.js$/,
         include: path.join(__dirname),
         exclude: /(node_modules)|(dist)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['env'],
+            },
           },
-        },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
 };

@@ -5,6 +5,9 @@
 ## 실행
 
 ```
+// install npm
+$ npm install
+
 // production mode
 $ npm run build
 
@@ -14,6 +17,8 @@ $ npm run dev
 // run dev server
 $ npm run devserver
 ```
+
+dist 폴더 내 결과물 구현
 
 ## 구현사항
 
