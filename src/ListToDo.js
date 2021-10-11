@@ -1,4 +1,5 @@
 import ItemToDo from './ItemToDo.js';
+import ListToDoHeader from './ListToDoHeader.js';
 
 export default function ListToDo({ $app, initialState, doneCount, onClick }) {
   // state 및 this객체 설정
@@ -10,6 +11,10 @@ export default function ListToDo({ $app, initialState, doneCount, onClick }) {
   this.setState = (nextState) => {
     this.state = nextState;
 
+    listToDoHeader.setState({
+      toDoItems: nextState,
+      selectedToDo: this.selectedToDo,
+    });
     setCountDown();
   };
 
@@ -39,7 +44,7 @@ export default function ListToDo({ $app, initialState, doneCount, onClick }) {
 
   const setItemToDo = (countDown, toDo) => {
     const itemToDo = new ItemToDo({
-      $app,
+      $app: this.$target,
       initialState: toDo,
       onClick: (toDo) => {
         setClickDone(countDown, toDo);
@@ -50,6 +55,10 @@ export default function ListToDo({ $app, initialState, doneCount, onClick }) {
         } else {
           this.selectedToDo = this.selectedToDo.filter((selected) => selected !== toDo);
         }
+        listToDoHeader.setState({
+          toDoItems: this.state,
+          selectedToDo: this.selectedToDo,
+        });
       },
     });
 
@@ -71,52 +80,31 @@ export default function ListToDo({ $app, initialState, doneCount, onClick }) {
   };
 
   // render
+  const listToDoHeader = new ListToDoHeader({
+    $app,
+    initialState: {
+      toDoItems: this.state,
+      selectedToDo: this.selectedToDo,
+    },
+    onClick: (toDos) => {
+      this.onClick(toDos);
+      this.selectedToDo = [];
+    },
+  });
+
   this.$target = document.createElement('div');
-  this.$target.className = 'list-to-do';
+  this.$target.className = 'list-to-do-container';
 
   const leftTarget = $app.querySelector('.left-container');
   leftTarget.appendChild(this.$target);
 
-  this.render = () => {
-    this.$target.innerHTML = `
-      <h2 class="list-to-do-title">할 일 목록</h2>
-      <div class="button-container">
-        <div class="sort-button-container">
-          <button>입력한 순</button>
-          <button>남은 시간 순</button>
-        </div>
-        <div class="done-button-container">
-          <button class="all-done-to-do-button">전체 종료</button>
-          <button class="select-done-to-do-button">선택 종료</button>
-        </div>
-      </div>
-      <div class="list-to-do-container">
-        <!-- item-to-do -->
-      </div>
-    `;
-  };
+  // this.render = () => {
+  //   this.$target.innerHTML = `
+  //     <div class="list-to-do-container">
+  //       <!-- item-to-do -->
+  //     </div>
+  //   `;
+  // };
 
-  // event handler
-  this.$target.addEventListener('click', (e) => {
-    const $allButton = e.target.closest('.all-done-to-do-button');
-    const $selectButton = e.target.closest('.select-done-to-do-button');
-
-    if ($allButton) {
-      this.state.forEach((toDo) => {
-        toDo.isFinish = true;
-        toDo.isCount = false;
-      });
-      this.onClick(this.state);
-    }
-
-    if ($selectButton) {
-      this.selectedToDo.forEach((toDo) => {
-        toDo.isFinish = true;
-        toDo.isCount = false;
-      });
-      this.onClick(this.selectedToDo);
-    }
-  });
-
-  this.render();
+  // this.render();
 }

@@ -17,15 +17,13 @@ export default function ItemToDo({ $app, initialState, onClick, onCheck }) {
 
   if (!this.state.isFinish) {
     // 할 일 목록에 추가
-    const container = $app.querySelector('.list-to-do-container');
-    container.appendChild(this.$target);
+    $app.appendChild(this.$target);
   } else {
     // 할 일 목록에서 삭제
     const deleteListToDo = document.getElementById(`${this.state.id}`);
     deleteListToDo.remove();
     // 종료 목록에 추가
-    const container = $app.querySelector('.done-to-do-container');
-    container.appendChild(this.$target);
+    $app.appendChild(this.$target);
   }
 
   this.render = () => {
