@@ -1,6 +1,7 @@
 export default function MakeToDo({ $app, onClick }) {
   this.onClick = onClick;
 
+  // render
   this.$target = document.createElement('div');
   this.$target.className = 'make-to-do';
 
@@ -24,6 +25,7 @@ export default function MakeToDo({ $app, onClick }) {
     `;
   };
 
+  // event handler
   this.$target.addEventListener('click', (e) => {
     const $button = e.target.closest('.make-to-do-button');
 

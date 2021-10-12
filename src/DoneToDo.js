@@ -18,7 +18,7 @@ export default function DoneToDo({ $app, initialState }) {
   this.render = () => {
     const doneToDoTemplate = this.state
       .map((toDo) => {
-        return toDo.render();
+        return toDo.template();
       })
       .join('');
 

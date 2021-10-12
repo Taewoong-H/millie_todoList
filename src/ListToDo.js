@@ -20,7 +20,7 @@ export default function ListToDo({ $app, initialState, onClick, onCheckClick }) 
   this.render = () => {
     const toDoTemplate = this.state
       .map((toDo) => {
-        return toDo.render();
+        return `<div class='to-do-${toDo.id}'>${toDo.template()}</div>`;
       })
       .join('');
 

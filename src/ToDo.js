@@ -12,25 +12,26 @@ export default function ToDo({ id, text, time, setRender, doneCount }) {
   this.setCount = () => {
     const countDown = setInterval(() => {
       this.time.count--;
+      // count가 종료 될 시 함수 종료
+      if (!this.isCount) {
+        clearInterval(countDown);
+      }
       // 시간이 0이 될 시 종료
-      if (this.time.count < 0) {
+      else if (this.time.count < 0) {
         clearInterval(countDown);
         this.isFinish = true;
         this.isCount = false;
         this.doneCount(this, true);
       }
-      // count가 종료 될 시 함수 종료
-      if (!this.isCount) {
-        clearInterval(countDown);
-      }
-      this.setRender();
+
+      // 1초 마다 toDo 객체 rerender
+      this.setRender(this);
     }, 1000);
   };
 
   this.setCount();
 
-  // render
-  this.render = () => {
+  this.template = () => {
     return `
       <div class="to-do ${this.time.count <= 5 && !this.isFinish ? 'warning' : ''}">
         <div>
@@ -48,6 +49,13 @@ export default function ToDo({ id, text, time, setRender, doneCount }) {
           ${this.isFinish ? '' : `<button data-id=${this.id} class="done-to-do-button">종료</button>`}
         </div>
       </div>
+    `;
+  };
+
+  // render(해당 toDo객체에만)
+  this.render = ($target) => {
+    $target.innerHTML = `
+      ${this.template()}
     `;
   };
 

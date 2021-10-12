@@ -6,6 +6,7 @@ import DoneToDo from './DoneToDo.js';
 import DonePopUp from './DonePopUp.js';
 
 export default function App($app) {
+  // state
   this.state = {
     idCount: 0,
     toDoItems: [],
@@ -32,8 +33,12 @@ export default function App($app) {
         id: this.state.idCount,
         text: toDoText,
         time: { origin: toDoTime, count: toDoTime },
-        setRender: () => {
-          listToDo.render();
+        setRender: (toDo) => {
+          const renderToDo = document.querySelector(`.to-do-${toDo.id}`);
+
+          if (renderToDo) {
+            toDo.render(renderToDo);
+          }
         },
         doneCount: (toDo, isPopUp) => {
           const newToDoItems = this.state.toDoItems.filter((e) => e !== toDo);
