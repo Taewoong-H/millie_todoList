@@ -23,9 +23,8 @@ export default function App($app) {
   $app.appendChild(rightContainer);
 
   // 할일 만들기 component
-  const makeToDo = new MakeToDo({
+  new MakeToDo({
     $app,
-    initialState: this.state.toDoItems,
     onClick: (toDoText, toDoTime) => {
       this.state.idCount += 1;
       // ToDoItem Object
@@ -140,7 +139,6 @@ export default function App($app) {
 
   this.setState = (nextState) => {
     this.state = nextState;
-    makeToDo.setState(this.state.toDoItems);
     listToDoHeader.setState({
       toDoItems: this.state.toDoItems,
       sortType: this.state.sortType,

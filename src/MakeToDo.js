@@ -1,13 +1,5 @@
-export default function MakeToDo({ $app, initialState, onClick }) {
-  this.state = initialState;
+export default function MakeToDo({ $app, onClick }) {
   this.onClick = onClick;
-  this.count = 0;
-
-  this.setState = (nextState) => {
-    this.state = nextState;
-
-    // this.render();
-  };
 
   this.$target = document.createElement('div');
   this.$target.className = 'make-to-do';

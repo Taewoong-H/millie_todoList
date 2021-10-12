@@ -1,5 +1,3 @@
-import ToDo from './ToDo.js';
-
 export default function DoneToDo({ $app, initialState }) {
   // state 및 this객체 설정
   this.state = initialState;
