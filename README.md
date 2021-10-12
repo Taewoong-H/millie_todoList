@@ -58,7 +58,12 @@ tree
 ├── src
 │   ├── index.js
 │   ├── App.js
-│   └── MakeToDo.js
+│   ├── MakeToDo.js
+│   ├── ListToDoHeader.js
+│   ├── ListToDo.js
+│   ├── ToDo.js
+│   ├── DoneToDo.js
+│   └── DonePopUp.js
 ├── package.json
 ├── README.md
 ├── babel.config.json
@@ -66,6 +71,10 @@ tree
 
 ```
 
-## 구현 상세도
+## 구현 상세도(UML)
 
-with diagram
+- user case
+  ![](https://github.com/Taewoong-H/millie_todoList/blob/master/public/KakaoTalk_20211012_221045419.jpg)
+
+- class diagram
+  ![](https://github.com/Taewoong-H/millie_todoList/blob/master/public/KakaoTalk_20211012_221045715.jpg)
