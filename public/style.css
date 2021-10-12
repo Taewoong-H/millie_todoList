@@ -77,6 +77,10 @@ body {
   padding: 5px 10px;
 }
 
+.to-do.warning {
+  background-color: yellow;
+}
+
 .to-do div input {
   margin: 0 5px;
 }

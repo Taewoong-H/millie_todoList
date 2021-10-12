@@ -32,11 +32,8 @@ export default function App($app) {
         id: this.state.idCount,
         text: toDoText,
         time: { origin: toDoTime, count: toDoTime },
-        isCount: true,
-        isFinish: false,
-        isChecked: false,
-        setRender: (toDo) => {
-          toDo.countRender();
+        setRender: () => {
+          listToDo.render();
         },
         doneCount: (toDo, isPopUp) => {
           const newToDoItems = this.state.toDoItems.filter((e) => e !== toDo);

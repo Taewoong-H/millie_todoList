@@ -1,11 +1,11 @@
-export default function ToDo({ id, text, time, isCount, isFinish, isChecked, setRender, doneCount }) {
+export default function ToDo({ id, text, time, setRender, doneCount }) {
   // state 및 this객체 설정
   this.id = id;
   this.text = text;
   this.time = time;
-  this.isCount = isCount;
-  this.isFinish = isFinish;
-  this.isChecked = isChecked;
+  this.isCount = true;
+  this.isFinish = false;
+  this.isChecked = false;
   this.setRender = setRender;
   this.doneCount = doneCount;
 
@@ -23,7 +23,7 @@ export default function ToDo({ id, text, time, isCount, isFinish, isChecked, set
       if (!this.isCount) {
         clearInterval(countDown);
       }
-      this.setRender(this);
+      this.setRender();
     }, 1000);
   };
 
@@ -32,7 +32,7 @@ export default function ToDo({ id, text, time, isCount, isFinish, isChecked, set
   // render
   this.render = () => {
     return `
-      <div class="to-do">
+      <div class="to-do ${this.time.count <= 5 && !this.isFinish ? 'warning' : ''}">
         <div>
           ${
             this.isFinish
@@ -51,11 +51,11 @@ export default function ToDo({ id, text, time, isCount, isFinish, isChecked, set
     `;
   };
 
-  // 시간 초 rerendering
-  this.countRender = () => {
-    if (this.isCount) {
-      const countText = document.querySelector(`#count${this.id}`);
-      countText.innerHTML = `${this.time.count}초`;
-    }
-  };
+  // // 시간 초 rerendering
+  // this.countRender = () => {
+  //   if (this.isCount) {
+  //     const countText = document.querySelector(`#count${this.id}`);
+  //     countText.innerHTML = `${this.time.count}초`;
+  //   }
+  // };
 }
