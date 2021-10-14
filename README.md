@@ -48,7 +48,7 @@ dist 폴더 내 결과물 구현
 - 종료 복원
   - 복원 클릭 시 할일 목록으로 이동
   - 시간은 다시 최초 설정한 시간이 적용되어 count
-  - 할일 목록의 맨 아래로 이동하지만, '입력한 순' 정렬로 정렬시 기존 id를 갖고있어 처음에 입력한 순서로 이동됨.
+  - 할일 목록의 맨 아래로 이동, 정렬 버튼 클릭 시 재정렬.
 - UML
   - ReadMe.md에 class diagram형태로 표현
 
@@ -83,4 +83,4 @@ tree
   ![](https://github.com/Taewoong-H/millie_todoList/blob/master/public/KakaoTalk_20211012_221045419.jpg)
 
 - class diagram
-  ![](https://github.com/Taewoong-H/millie_todoList/blob/master/public/KakaoTalk_20211012_221045715.jpg)
+  ![](/public/class_diagram.png)
