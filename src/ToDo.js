@@ -43,7 +43,7 @@ export default function ToDo({ id, text, time, setRender, doneCount }) {
           <span>${this.text}</span>
         </div>
         <div>
-          <span id="count${this.id}" class="count">
+          <span class="count">
             ${this.isFinish ? this.time.origin : this.time.count}초
           </span>
           ${

@@ -80,7 +80,7 @@ tree
 ## 구현 상세도(UML)
 
 - user case
-  ![](https://github.com/Taewoong-H/millie_todoList/blob/master/public/KakaoTalk_20211012_221045419.jpg)
+  ![](/public/KakaoTalk_20211012_221045419.jpg)
 
 - class diagram
   ![](/public/class_diagram.png)
