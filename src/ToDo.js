@@ -46,24 +46,20 @@ export default function ToDo({ id, text, time, setRender, doneCount }) {
           <span id="count${this.id}" class="count">
             ${this.isFinish ? this.time.origin : this.time.count}초
           </span>
-          ${this.isFinish ? '' : `<button data-id=${this.id} class="done-to-do-button">종료</button>`}
+          ${
+            this.isFinish
+              ? `<button data-id=${this.id} class="restore-to-do-button">복원</button>`
+              : `<button data-id=${this.id} class="done-to-do-button">종료</button>`
+          }
         </div>
       </div>
     `;
   };
 
-  // render(해당 toDo객체에만)
+  // render(해당 toDo객체만)
   this.render = ($target) => {
     $target.innerHTML = `
       ${this.template()}
     `;
   };
-
-  // // 시간 초 rerendering
-  // this.countRender = () => {
-  //   if (this.isCount) {
-  //     const countText = document.querySelector(`#count${this.id}`);
-  //     countText.innerHTML = `${this.time.count}초`;
-  //   }
-  // };
 }

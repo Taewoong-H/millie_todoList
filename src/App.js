@@ -125,6 +125,16 @@ export default function App($app) {
   const doneToDo = new DoneToDo({
     $app,
     initialState: this.state.doneToDoItems,
+    onClick: (toDo) => {
+      const newToDoItems = this.state.doneToDoItems.filter((e) => e !== toDo);
+
+      this.setState({
+        ...this.state,
+        toDoItems: [...this.state.toDoItems, toDo],
+        doneToDoItems: [...newToDoItems],
+        isPopUp: false,
+      });
+    },
   });
 
   // 완료 팝업 component

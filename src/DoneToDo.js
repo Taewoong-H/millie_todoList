@@ -1,6 +1,7 @@
-export default function DoneToDo({ $app, initialState }) {
+export default function DoneToDo({ $app, initialState, onClick }) {
   // state 및 this객체 설정
   this.state = initialState;
+  this.onClick = onClick;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -29,6 +30,22 @@ export default function DoneToDo({ $app, initialState }) {
       </div>
     `;
   };
+
+  // event handler
+  this.$target.addEventListener('click', (e) => {
+    const $restoreButton = e.target.closest('.restore-to-do-button');
+
+    if ($restoreButton) {
+      const restoreToDo = this.state.find((toDo) => toDo.id === Number($restoreButton.dataset.id));
+
+      restoreToDo.isCount = true;
+      restoreToDo.isFinish = false;
+      restoreToDo.time.count = restoreToDo.time.origin;
+      restoreToDo.setCount();
+
+      this.onClick(restoreToDo);
+    }
+  });
 
   this.render();
 }
